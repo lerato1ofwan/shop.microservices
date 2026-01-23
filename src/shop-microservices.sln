@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{5150
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "Services\Catalog\Catalog.API\Catalog.API.csproj", "{3F9C03CD-C9E0-4DA8-A84D-BC0339FAA10E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8BACCD07-BD47-4EB0-A2D5-66B5F3120D41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Library", "Shared\Shared.Library\Shared.Library.csproj", "{8917ABF1-6004-48DC-82F6-A664D269299B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,10 @@ Global
 		{3F9C03CD-C9E0-4DA8-A84D-BC0339FAA10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F9C03CD-C9E0-4DA8-A84D-BC0339FAA10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F9C03CD-C9E0-4DA8-A84D-BC0339FAA10E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8917ABF1-6004-48DC-82F6-A664D269299B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8917ABF1-6004-48DC-82F6-A664D269299B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8917ABF1-6004-48DC-82F6-A664D269299B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8917ABF1-6004-48DC-82F6-A664D269299B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -28,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5150CEF4-1E54-43F0-9981-312C699B44A5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{3F9C03CD-C9E0-4DA8-A84D-BC0339FAA10E} = {5150CEF4-1E54-43F0-9981-312C699B44A5}
+		{8917ABF1-6004-48DC-82F6-A664D269299B} = {8BACCD07-BD47-4EB0-A2D5-66B5F3120D41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CEFB0B3-72AD-4994-86F8-99A4D8648040}
