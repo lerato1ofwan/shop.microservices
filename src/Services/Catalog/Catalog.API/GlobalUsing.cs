@@ -8,3 +8,4 @@ global using Catalog.API.Exceptions;
 global using FluentValidation;
 global using Shared.Library.Behaviours;
 global using Shared.Library.Exceptions.Handler;
+global using Catalog.API.Data;
