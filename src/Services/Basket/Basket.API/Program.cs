@@ -5,6 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to container (DI)
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
 
 builder.Services.AddCarter();
 
