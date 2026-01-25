@@ -1,7 +1,18 @@
 ﻿
+using Catalog.API.Products.UpdateProduct;
+
 namespace Catalog.API.Products.DeleteProduct;
 
 public record DeleteProductResponse(bool IsSuccess);
+
+public class DeleteProductCommandValidator : AbstractValidator<DeleteProductCommand>
+{
+    public DeleteProductCommandValidator()
+    {
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Product Id is required");
+    }
+}
 
 public class DeleteProductEndpoint : ICarterModule
 {

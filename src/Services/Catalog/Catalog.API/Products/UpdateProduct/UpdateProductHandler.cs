@@ -11,6 +11,24 @@ public record UpdateProductCommand(
 
 public record UpdateProductResult(bool IsSuccess);
 
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+{
+    public UpdateProductCommandValidator()
+    {
+        RuleFor(x => x.Id)
+            .NotEmpty().WithMessage("Product Id is required");
+
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Product name is required.")
+            .Length(1, 150).WithMessage("Product name must not exceed 100 characters.");
+
+        RuleFor(x => x.Price)
+            .NotEmpty().WithMessage("Product price is required.")
+            .GreaterThan(0).WithMessage("Product price must be greater than zero.");
+
+    }
+}
+
 internal class UpdateProductHandler
     (IDocumentSession session, ILogger<UpdateProductHandler> logger)
     : ICommandHandler<UpdateProductCommand, UpdateProductResult>
