@@ -1,13 +1,17 @@
 using Carter;
+using Shared.Library.Behaviours;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to container (DI)
+var assembly = typeof(Program).Assembly;
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    config.RegisterServicesFromAssembly(assembly);
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
 });
+
 
 builder.Services.AddMarten(options =>
 {
