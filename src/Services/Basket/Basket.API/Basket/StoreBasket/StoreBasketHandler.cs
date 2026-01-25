@@ -23,8 +23,8 @@ public class StoreBasketHandler(
     {
         ShoppingCart cart = command.Cart;
 
-        var updatedBasket = await basketRepository.UpdateBasketAsync(cart);
+        var storedBasket = await basketRepository.StoreBasketAsync(cart, cancellationToken);
 
-        return new StoreBasketResult("swm");
+        return new StoreBasketResult(storedBasket.UserName);
     }
 }
