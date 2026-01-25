@@ -6,3 +6,5 @@ global using Marten;
 global using Shared.Library.CQRS;
 global using Catalog.API.Exceptions;
 global using FluentValidation;
+global using Shared.Library.Behaviours;
+global using Shared.Library.Exceptions.Handler;

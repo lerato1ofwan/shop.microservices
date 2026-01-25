@@ -1,7 +1,3 @@
-using Carter;
-using Microsoft.AspNetCore.Diagnostics;
-using Shared.Library.Behaviours;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to container (DI)
@@ -19,35 +15,12 @@ builder.Services.AddMarten(options =>
     options.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 app.MapCarter();
 
-app.UseExceptionHandler(exceptionHandlerApp =>
-{
-    exceptionHandlerApp.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-        if (exception is null)
-        {
-            return;
-        }
-
-        var problemDetails = new
-        {
-            Title = "An error occurred while processing your request.",
-            Detail = exception.Message,
-            Status = StatusCodes.Status500InternalServerError
-        };
-
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-        logger.LogError(exception, exception.Message);
-
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
-        await context.Response.WriteAsJsonAsync(problemDetails);
-    });
-});
+app.UseExceptionHandler(options => { });
 
 app.Run();
