@@ -12,10 +12,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Basket.API.csproj", "."]
-RUN dotnet restore "./Basket.API.csproj"
+COPY ["Services/Basket/Basket.API/Basket.API.csproj", "Services/Basket/Basket.API/"]
+COPY ["Shared/Shared.Library/Shared.Library.csproj", "Shared/Shared.Library/"]
+RUN dotnet restore "./Services/Basket/Basket.API/Basket.API.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/Services/Basket/Basket.API"
 RUN dotnet build "./Basket.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

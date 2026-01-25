@@ -8,6 +8,8 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 builder.Services.AddCarter();
 
+#region MediatR Configuration
+
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
@@ -15,6 +17,7 @@ builder.Services.AddMediatR(config =>
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 builder.Services.AddValidatorsFromAssembly(assembly);
+#endregion
 
 #region Database Configuration
 var connectionString = builder.Configuration.GetConnectionString("Database");
