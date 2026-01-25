@@ -9,3 +9,4 @@ global using FluentValidation;
 global using Shared.Library.Behaviours;
 global using Shared.Library.Exceptions.Handler;
 global using Catalog.API.Data;
+global using Marten.Pagination;
