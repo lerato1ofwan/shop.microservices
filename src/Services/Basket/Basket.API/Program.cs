@@ -7,9 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
+var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.Configuration = redisConnectionString;
 });
 
 builder.Services.AddCarter();
@@ -26,16 +27,17 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 #endregion
 
 #region Database Configuration
-var connectionString = builder.Configuration.GetConnectionString("Database");
+var dbConnectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddMarten(options =>
 {
-    options.Connection(connectionString!);
+    options.Connection(dbConnectionString!);
     options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
 }).UseLightweightSessions();
 #endregion
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(connectionString!);
+    .AddNpgSql(dbConnectionString!)
+    .AddRedis(redisConnectionString!);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
