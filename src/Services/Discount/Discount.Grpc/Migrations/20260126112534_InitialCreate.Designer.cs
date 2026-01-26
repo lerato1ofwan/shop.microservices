@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Discount.Grpc.Migrations
 {
     [DbContext(typeof(DiscountDbContext))]
-    [Migration("20260126111225_InitialCreate")]
+    [Migration("20260126112534_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -40,6 +40,22 @@ namespace Discount.Grpc.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Coupons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("019bf51f-44fc-4987-9a9e-ab118d7e1e6e"),
+                            Amount = 150,
+                            Description = "The greatest product we have",
+                            ProductName = "New Product Superior"
+                        },
+                        new
+                        {
+                            Id = new Guid("a37d162b-1aa9-4c93-a0ad-c36355e7393f"),
+                            Amount = 3000,
+                            Description = "This mirrorless camera delivers stunning 45MP resolution with 8K video capabilities and advanced autofocus for professional photography.",
+                            ProductName = "Canon EOS R5"
+                        });
                 });
 #pragma warning restore 612, 618
         }
