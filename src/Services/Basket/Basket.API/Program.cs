@@ -1,65 +1,66 @@
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Shared.Library.Behaviours;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to container (DI)
+// Add services to the container.
 
-// Application services
-builder.Services.AddCarter();
-
+//Application Services
 var assembly = typeof(Program).Assembly;
-
+builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(assembly);
-    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+    config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
 });
 
-
-// Data servcices
-#region Database Configuration
-var dbConnectionString = builder.Configuration.GetConnectionString("Database");
-builder.Services.AddMarten(options =>
+//Data Services
+builder.Services.AddMarten(opts =>
 {
-    options.Connection(dbConnectionString!);
-    options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+    opts.Connection(builder.Configuration.GetConnectionString("Database")!);
+    opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
 }).UseLightweightSessions();
-#endregion
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
-var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = redisConnectionString;
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    //options.InstanceName = "Basket";
 });
 
-// Grpc services
+//Grpc Services
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
     options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+    var handler = new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+
+    return handler;
 });
 
-// Cross cutting concerns
-builder.Services.AddValidatorsFromAssembly(assembly);
+//Cross-Cutting Services
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(dbConnectionString!)
-    .AddRedis(redisConnectionString!);
-
-builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
 app.MapCarter();
-
 app.UseExceptionHandler(options => { });
-
 app.UseHealthChecks("/health",
     new HealthCheckOptions
     {
