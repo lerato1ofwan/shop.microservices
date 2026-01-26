@@ -1,6 +1,9 @@
 using Discount.Grpc.Data;
 using Discount.Grpc.Services;
+using Discount.Grpc.Models;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,13 @@ builder.Services.AddDbContext<DiscountDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("Database"));
 });
+
+// Configure Mapster for gRPC immutable types
+var config = TypeAdapterConfig.GlobalSettings;
+config.NewConfig<Coupon, CouponModel>()
+    .Map(dest => dest.ProductName, src => src.ProductName)
+    .Map(dest => dest.Description, src => src.Description)
+    .Map(dest => dest.Amount, src => src.Amount);
 
 builder.Services.AddGrpc();
 

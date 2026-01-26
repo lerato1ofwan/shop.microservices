@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -17,7 +16,8 @@ namespace Discount.Grpc.Migrations
                 name: "Coupons",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     ProductName = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Amount = table.Column<int>(type: "INTEGER", nullable: false)
@@ -32,8 +32,8 @@ namespace Discount.Grpc.Migrations
                 columns: new[] { "Id", "Amount", "Description", "ProductName" },
                 values: new object[,]
                 {
-                    { new Guid("019bf51f-44fc-4987-9a9e-ab118d7e1e6e"), 150, "The greatest product we have", "New Product Superior" },
-                    { new Guid("a37d162b-1aa9-4c93-a0ad-c36355e7393f"), 3000, "This mirrorless camera delivers stunning 45MP resolution with 8K video capabilities and advanced autofocus for professional photography.", "Canon EOS R5" }
+                    { 1, 150, "The greatest product we have", "New Product Superior" },
+                    { 2, 3000, "This mirrorless camera delivers stunning 45MP resolution with 8K video capabilities and advanced autofocus for professional photography.", "Canon EOS R5" }
                 });
         }
 
