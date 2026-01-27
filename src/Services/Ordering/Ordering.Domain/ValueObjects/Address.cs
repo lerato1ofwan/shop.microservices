@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace Ordering.Domain.ValueObjects;
 
-namespace Ordering.Domain.ValueObjects
+public record class Address
 {
-    public class Address
-    {
-        //public string 
-    }
+    public string FirstName { get; } = default!;
+    public string LastName { get; } = default!;
+    public string? EmailAddress { get; } = default!;
+    public string AddressLine { get; } = default!;
+    public string Country { get; } = default!;
+    public string Province { get; } = default!;
+    public string PostalCode { get; } = default!;
 }

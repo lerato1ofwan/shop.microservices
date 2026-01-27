@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ordering.Domain.Abstractions;
+﻿namespace Ordering.Domain.Abstractions;
 
 public interface IEntity<T> : IEntity 
     where T : notnull
