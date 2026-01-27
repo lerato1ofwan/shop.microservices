@@ -1,5 +1,8 @@
 ﻿namespace Ordering.Domain.Models;
 
+/// <summary>
+/// Represents a customer in the ordering domain (Customer entity)
+/// </summary>
 public class Customer : Entity<CustomerId>
 {
     public string Name { get; private set; } = default!;
