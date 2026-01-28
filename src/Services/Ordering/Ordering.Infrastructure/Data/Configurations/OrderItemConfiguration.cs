@@ -1,4 +1,4 @@
-namespace Ordering.Infrastructure.Configurations;
+namespace Ordering.Infrastructure.Data.Configurations;
 
 public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
 {
@@ -11,6 +11,7 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
                 dbId => OrderItemId.Of(dbId));
 
         builder.Property(oi => oi.Price)
+            .HasPrecision(18, 2)
             .IsRequired();
 
         builder.Property(oi => oi.Quantity)

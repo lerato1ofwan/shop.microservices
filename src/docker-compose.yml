@@ -5,6 +5,9 @@ services:
   basketdb:
     image: postgres:17
 
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
   distributedcache:
     image: redis:8.4.0-alpine
 
@@ -19,6 +22,12 @@ services:
     build:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
+
+  # ordering.api:
+  #   image: ${DOCKER_REGISTRY-}orderingapi
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
   discount.grpc:
     image: ${DOCKER_REGISTRY-}discountgrpc

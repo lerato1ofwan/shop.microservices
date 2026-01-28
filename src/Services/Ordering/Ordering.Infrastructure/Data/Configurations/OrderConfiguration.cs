@@ -1,4 +1,4 @@
-namespace Ordering.Infrastructure.Configurations;
+namespace Ordering.Infrastructure.Data.Configurations;
 
 public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
@@ -111,14 +111,17 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
                 paymentBuilder.Property(p => p.CVV)
                     .HasMaxLength(3)
                     .IsRequired();
+
+                paymentBuilder.Property(p => p.PaymentMethod)
+                    .IsRequired();
             });
 
-        builder.Property(o => o.Status)
-            .HasDefaultValue(OrderStatus.Pending)
-            .HasConversion(
-                status => status.ToString(),
-                dbStatus => (OrderStatus)Enum.Parse(typeof(OrderStatus), dbStatus));
+            builder.Property(o => o.Status)
+                .HasConversion(
+                    status => status.ToString(),
+                    dbStatus => Enum.Parse<OrderStatus>(dbStatus)); 
 
-        builder.Property(o => o.TotalPrice);
+        builder.Property(o => o.TotalPrice)
+            .HasPrecision(18, 2);
     }
 }

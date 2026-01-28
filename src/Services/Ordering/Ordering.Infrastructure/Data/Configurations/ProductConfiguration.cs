@@ -1,4 +1,4 @@
-namespace Ordering.Infrastructure.Configurations;
+namespace Ordering.Infrastructure.Data.Configurations;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
@@ -11,6 +11,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                 dbId => ProductId.Of(dbId));
 
         builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
-        builder.Property(p => p.Price).IsRequired();
+        builder.Property(p => p.Price).HasPrecision(18, 2).IsRequired();
     }
 }

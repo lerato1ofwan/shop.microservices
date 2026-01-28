@@ -8,12 +8,11 @@ public record Payment
     public string CVV { get; } = default!;
     public int PaymentMethod { get; } = default!;
 
-    protected Payment(
-        string? cardName,
-        string cardNumber,
-        string expiration,
-        string cvv,
-        int paymentMethod)
+    protected Payment()
+    {
+    }
+
+    private Payment(string cardName, string cardNumber, string expiration, string cvv, int paymentMethod)
     {
         CardName = cardName;
         CardNumber = cardNumber;
@@ -22,22 +21,13 @@ public record Payment
         PaymentMethod = paymentMethod;
     }
 
-    public static Payment Of(
-        string? cardName,
-        string cardNumber,
-        string expiration,
-        string cvv,
-        int paymentMethod)
+    public static Payment Of(string cardName, string cardNumber, string expiration, string cvv, int paymentMethod)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(cardNumber));
-        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(expiration));
-        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(cvv));
+        ArgumentException.ThrowIfNullOrWhiteSpace(cardName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(cardNumber);
+        ArgumentException.ThrowIfNullOrWhiteSpace(cvv);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(cvv.Length, 3);
 
-        return new Payment(
-            cardName,
-            cardNumber,
-            expiration,
-            cvv,
-            paymentMethod);
+        return new Payment(cardName, cardNumber, expiration, cvv, paymentMethod);
     }
 }
