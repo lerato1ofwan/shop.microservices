@@ -21,7 +21,8 @@ public static class DependencyInjection
                 dbConnectionString,
                 sqlOptions => sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
         });
-        // services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+        
+        services.AddScoped<IOrderRepository, OrderRepository>();
 
         return services;
     }

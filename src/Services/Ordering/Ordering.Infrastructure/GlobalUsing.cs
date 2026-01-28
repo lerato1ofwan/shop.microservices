@@ -6,3 +6,5 @@ global using Ordering.Domain.ValueObjects;
 global using Ordering.Domain.Enums;
 global using Ordering.Infrastructure.Data;
 global using Ordering.Infrastructure.Data.Interceptors;
+global using Ordering.Application.Data.Interfaces;
+global using Ordering.Infrastructure.Data.Repositories;
