@@ -2,9 +2,9 @@ namespace Ordering.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommandHandler
     (IOrderRepository orderRepository)
-    : ICommandHandler<CreateOrderCommand, CreateOrderCommandResult>
+    : ICommandHandler<CreateOrderCommand, CreateOrderResult>
 {
-    public async Task<CreateOrderCommandResult> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
+    public async Task<CreateOrderResult> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
         // Create order entity from DTO
         var order = CreateNewOrder(command.Order);
@@ -12,7 +12,7 @@ public class CreateOrderCommandHandler
         await orderRepository.AddAsync(order);
 
         // Return result
-        return new CreateOrderCommandResult(order.Id.Value);
+        return new CreateOrderResult(order.Id.Value);
     }
 
     private Order CreateNewOrder(OrderDto orderDto)

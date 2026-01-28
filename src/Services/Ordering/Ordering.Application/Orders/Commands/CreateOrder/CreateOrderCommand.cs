@@ -2,9 +2,9 @@ namespace Ordering.Application.Orders.Commands.CreateOrder;
 
 public record CreateOrderCommand(
     OrderDto Order
-) : ICommand<CreateOrderCommandResult>;
+) : ICommand<CreateOrderResult>;
 
-public record CreateOrderCommandResult(Guid Id);
+public record CreateOrderResult(Guid Id);
 
 public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
