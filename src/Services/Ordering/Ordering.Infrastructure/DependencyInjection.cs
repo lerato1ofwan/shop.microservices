@@ -10,6 +10,7 @@ public static class DependencyInjection
         var dbConnectionString = configuration.GetConnectionString("Database");
         services.AddDbContext<ApplicationDbContext>(options =>
         {
+            options.AddInterceptors(new AuditableEntityInterceptors());
             options.UseSqlServer(
                 dbConnectionString,
                 sqlOptions => sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
