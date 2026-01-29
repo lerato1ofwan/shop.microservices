@@ -40,7 +40,7 @@ public class OrderRepository
         var pageIndex = paginationRequest.PageIndex;
         var pageSize = paginationRequest.PageSize;
 
-        var query = context.Orders
+        var query = await context.Orders
             .AsNoTracking()
             .Include(o => o.OrderItems)
             .OrderBy(o => o.OrderName.Value)
@@ -48,11 +48,13 @@ public class OrderRepository
             .Take(pageSize)
             .ToListAsync(cancellationToken);
 
+        var totalCount = await context.Orders.CountAsync(cancellationToken);
+
         return new PaginatedResult<Order>(
             pageIndex,
             pageSize,
-            await context.Orders.LongCountAsync(cancellationToken),
-            await query
+            totalCount,
+            query
         );
     }
 
@@ -70,7 +72,7 @@ public class OrderRepository
         return await context.Orders
             .AsNoTracking()
             .Where(x => x.OrderName.Value.Contains(orderName))
-            .OrderBy(x => x.OrderName)
+            .OrderBy(x => x.OrderName.Value)
             .ToListAsync(cancellationToken);
     }
 
