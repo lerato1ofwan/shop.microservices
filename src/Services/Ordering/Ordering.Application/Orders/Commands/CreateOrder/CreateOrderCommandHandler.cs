@@ -8,6 +8,7 @@ public class CreateOrderCommandHandler
     {
         // Create order entity from DTO
         var order = CreateNewOrder(command.Order);
+        
         // Save order to database
         await orderRepository.AddAsync(order);
 
