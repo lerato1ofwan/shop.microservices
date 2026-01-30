@@ -99,6 +99,5 @@ public class Order : Aggregate<OrderId>
     {
         _orderItems.Add(orderItem);
     }
-
     #endregion
 }

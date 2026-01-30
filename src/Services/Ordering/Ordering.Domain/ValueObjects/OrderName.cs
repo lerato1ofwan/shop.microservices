@@ -11,7 +11,7 @@ public record OrderName
     public static OrderName Of(string value)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(nameof(value));
-        ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DefaultLength, nameof(value));
+        // ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DefaultLength, nameof(value));
 
         return new OrderName(value);
     }
